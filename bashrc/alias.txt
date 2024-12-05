@@ -1,0 +1,7 @@
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gp='git pull'
+alias gf='git fetch'
+alias gc='git commit -m'
+alias gclean="python3 /Users/n374313/workspace/local-config/git_scripts/gitclean.py"
