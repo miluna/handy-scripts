@@ -1,0 +1,68 @@
+---
+- name: Bootstrap Ubuntu with development tools
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install basic prerequisites
+      apt:
+        name:
+          - curl
+          - gnupg
+          - software-properties-common
+          - apt-transport-https
+          - ca-certificates
+        state: present
+
+    - name: Install Podman
+      apt:
+        name: podman
+        state: present
+
+    - name: Install Podman Compose
+      apt:
+        name: podman-compose
+        state: present
+
+    - name: Install GitHub CLI
+      apt:
+        name: gh
+        state: present
+
+    - name: Check if Azure CLI is installed
+      command: which az
+      register: az_installed
+      ignore_errors: true
+      changed_when: false
+
+    - name: Install Azure CLI via script
+      shell: "curl -sL https://aka.ms/InstallAzureCLIDeb | bash"
+      when: az_installed.rc != 0
+
+    - name: Install zsh
+      apt: 
+        name: zsh
+        state: present
+
+    - name: Determine real user
+      set_fact:
+        real_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
+
+    - name: Change user shell to zsh
+      user:
+        name: "{{ real_user }}"
+        shell: /bin/zsh
+
+    - name: Append custom configuration to .zshrc
+      blockinfile:
+        path: "/home/{{ real_user }}/.zshrc"
+        block: "{{ lookup('file', '../config/zshrc.txt') }}"
+        create: yes
+        owner: "{{ real_user }}"
+        mode: '0644'
+

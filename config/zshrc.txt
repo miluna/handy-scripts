@@ -1,0 +1,5 @@
+
+alias g='git'
+alias gclean="python3 ~/workspace/handy-scripts/scripts/gclean.py"
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word

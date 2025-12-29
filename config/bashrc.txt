@@ -1,0 +1,2 @@
+alias g='git'
+alias gclean="python3 ~/workspace/handy-scripts/scripts/gclean.py"

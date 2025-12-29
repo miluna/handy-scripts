@@ -43,3 +43,13 @@ Add an alias that calls the script:
 ```bash
 alias gclean='python /{your_path}/handy-scripts/git/gclean.py'
 ```
+
+## Automatic Bootstrapping
+
+You can use Ansible to bootstrap the system with the scripts in this repository.
+
+```bash
+sudo apt install ansible
+ansible-playbook playbooks/bootstrap-ubuntu.yml --ask-become-pass
+```
+

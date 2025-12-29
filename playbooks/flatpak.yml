@@ -1,0 +1,45 @@
+---
+- name: Installs Flatpak applications
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    - name: Install Flatpak
+      apt:
+        name: flatpak
+        state: present
+
+    - name: Install Bruno
+      flatpak:
+        name: com.usebruno.Bruno
+        state: present
+    
+    - name: Install Podman Desktop
+      flatpak:
+        name: io.podman_desktop.PodmanDesktop
+        state: present
+
+    - name: Install VLC
+      flatpak:
+        name: org.videolan.VLC
+        state: present
+    
+    - name: Install Sublime Text
+      flatpak:
+        name: com.sublimetext.three
+        state: present
+
+    - name: Install Visual Studio Code
+      flatpak:
+        name: com.visualstudio.code
+        state: present
+      
+    - name: Install IntelliJ IDEA Community
+      flatpak:
+        name: com.jetbrains.IntelliJ-IDEA-Community
+        state: present
+    
+    - name: Install Android Studio
+      flatpak:
+        name: com.google.AndroidStudio
+        state: present
